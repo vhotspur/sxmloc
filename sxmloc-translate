@@ -1,0 +1,66 @@
+#!/bin/sh
+
+SXMLOC_HOME=`dirname $0`
+
+PO_INPUT="$1"
+XML_INPUT="$2"
+
+[ -z "$PO_INPUT" ] && exit 1
+[ -z "$XML_INPUT" ] && exit 1
+
+(
+	cat <<"XML_HEADER"
+<?xml version="1.0"?>
+<xsl:stylesheet version="1.0"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:loc="http://github.com/vhotspur/sxmloc"
+	>
+
+	<xsl:template match="loc:g">
+		<xsl:variable name="POSITION">
+			<xsl:for-each select="./ancestor-or-self::*">
+				<xsl:variable name="ORDER">
+					<xsl:value-of select="count(preceding-sibling::*) + 1" />
+				</xsl:variable>
+				<xsl:if test="position() &gt; 1">
+					<xsl:text>-</xsl:text>
+				</xsl:if>
+				<xsl:value-of select="$ORDER" />
+			</xsl:for-each>
+		</xsl:variable>
+		
+		<xsl:variable name="RESULT">
+		<xsl:choose>
+XML_HEADER
+
+	msgexec -i "$PO_INPUT" "${SXMLOC_HOME}/msgexec-po2xml"
+
+	cat <<"XML_FOOTER"
+			<xsl:otherwise />
+		</xsl:choose>
+		</xsl:variable>
+		
+		<xsl:choose>
+			<xsl:when test="$RESULT = ''">
+				<xsl:apply-templates />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy-of select="$RESULT" />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template match="*">
+		<xsl:copy>
+			<xsl:copy-of select="@*" />
+			<xsl:apply-templates />
+		</xsl:copy>
+	</xsl:template>
+
+	</xsl:stylesheet>
+
+XML_FOOTER
+
+
+) \
+| xsltproc /dev/stdin "$XML_INPUT"

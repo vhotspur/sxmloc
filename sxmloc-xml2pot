@@ -1,0 +1,10 @@
+#!/bin/sh
+
+SXMLOC_HOME=`dirname $0`
+
+XML_INPUT=/dev/stdin
+
+xsltproc "${SXMLOC_HOME}/extract.xsl" "$XML_INPUT" \
+	| xgettext --from-code=utf-8 --language=PHP \
+		--add-comments=l10n -o /dev/stdout \
+		/dev/stdin

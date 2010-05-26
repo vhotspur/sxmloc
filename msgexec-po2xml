@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# ignore the first batch with project info etc.
+if [ -z "$MSGEXEC_MSGID" ]; then
+	cat >/dev/null
+	exit 0
+fi
+
+line=`echo "$MSGEXEC_LOCATION" | cut '-d:' -f 2`
+pofile=`echo "$MSGEXEC_LOCATION" | cut '-d:' -f 1`
+position=`sed "${line}q" "$pofile" \
+	| tac | sed -n 's/^#. l10n:POSITION:\(.*\)/\1/p' \
+	| head -n 1 | tr -d ' '`
+
+(
+	echo '<xsl:when test="$POSITION = '"'$position'"'">'
+	cat
+	echo '</xsl:when>'
+)
+
+
+exit 0

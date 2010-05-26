@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<!DOCTYPE book PUBLIC '-//OASIS//DTD DocBook XML V4.2//EN' 
+          'http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd'>
+<book lang="en" xmlns:l="http://github.com/vhotspur/sxmloc">
+	<bookinfo>
+		<title><l:g>Sample DocBook</l:g></title>
+		<author>
+			<firstname>Vojtěch</firstname>
+			<surname>Horký</surname>
+		</author>
+	</bookinfo>
+
+<preface>
+	<title><l:g>Preface</l:g></title>
+	<para><l:g>Very first paragraph.</l:g></para>
+	<para>Second paragraph.</para>
+</preface>
+
+<chapter>
+	<title>First chapter</title>
+	<para><l:g>First paragraph of the first chapter.</l:g></para>
+	<para>Some text in the first chapter.</para>
+	<para><l:g>Another paragraph.</l:g></para>
+	<para>
+		<l:g>Paragraph with e-mail address (fictional, though):
+			<email>vhotspur@github.com</email>.
+		</l:g>
+	</para>
+</chapter>
+
+<chapter>
+	<title><l:g>Second chapter</l:g></title>
+	<para>Here is a very long text that is supposed to be translated.</para>
+	<para>And yet another paragraph.</para>
+</chapter>
+
+</book>
