@@ -1,0 +1,76 @@
+SXmLoc: Simple XML localization
+-------------------------------
+SXmLoc is a set of XSLT stylesheets and shell scripts intended to be used
+for translating small parts of XML files.
+
+SXmLoc uses GNU gettext[1] as a backend for storing strings that shall be
+translated but unlike gettext, it does the translations off-line. Normally,
+when using gettext in C, you insert strings into your program using the
+gettext function (or _ macro) and the localized string is selected at runtime
+from a compiled MO file. SXmLoc does not need MO files as the translation is
+retrieved from the PO file and translated XML is generated.
+
+The typical workflow with SXmLoc is:
+ 1) Edit the XML file.
+    The text that shall be translated must be enclosed inside <loc:g>
+    elements. The 'loc' is a SXmLoc namespace providing elements needed for
+	translation, pointing to http://github.com/vhotspur/sxmloc.
+	The 'g' stands for a general string (in the future, there might be more
+	elements to distinguish between block and in-line strings).
+ 2) Create the POT file.
+    Instead of running xgettext(1), you run
+    $ sxmloc-xml2pot <your-xml-file >your-pot-file
+    (notice that sxmloc-xml2pot uses standard input and output only).
+ 3) Merge with PO file.
+    You follow the standard procedure: running msginit(1) or msgmerge(1).
+ 4) Translate the PO file.
+    Again, no difference to standard gettext usage.
+ 5) Apply the translation to the XML file
+    Instead of creating the MO file, you run
+    $ sxmloc-translate lang.po your-xml-file
+    which will print to standard output translated XML.
+
+
+Demo
+====
+Inside the sample/ directory is a short example how the localization can
+be done, together with a Makefile containing all the necessary commands.
+
+
+Installation
+============
+Prerequisities:
+ * GNU gettext [1]
+ * libxslt (the xsltproc(1) utility) [2]
+
+SXmLoc does not need to compile anything, thus simply invoking
+# make install
+as root will install SXmLoc into /usr/local/bin and /usr/local/share/sxmloc.
+
+If you wish to install into other directories, you might need to change
+the PREFIX variable (e.g. run `make install PREFIX=/usr') or, for more 
+subtle changes, set the MY..DIR variables.
+
+For packagers: SXmLoc supports the traditional DESTDIR variable.
+
+
+How it works
+============
+The extraction of the strings is pretty straightforward: everything inside
+the loc:g elements is copied (enclosed inside gettext("...")), the rest of
+the document is ignored. To bypass possible problems with multiline strings,
+PHP is used as the intermediary language.
+This output is then run through xgettext(1) and printed to standard output.
+The position in the source code is remembered through a comment in the POT
+file which describes the offsets in the XML tree.
+
+The translations are applied to the original XML file by generating a XSLT
+that finds the loc:g elements and compares their position with the comment
+in the PO file. When the position matches, the loc:g is replaced with the
+translated string. Everything else is copied as-is into the final document.
+
+
+Links
+=====
+[1] http://www.gnu.org/software/gettext/
+[2] http://xmlsoft.org/XSLT/

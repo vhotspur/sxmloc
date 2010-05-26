@@ -66,6 +66,7 @@ uninstall:
 dist:
 	$(MKDIR) $(DISTNAME)
 	$(CP) Makefile $(DISTNAME)
+	$(CP) README $(DISTNAME)
 	$(CP) sxmloc-xml2pot sxmloc-translate $(DISTNAME)
 	$(CP) extract.xsl sxmloc-0.1.dtd msgexec-po2xml $(DISTNAME)
 	$(MKDIR) $(DISTNAME)/sample
