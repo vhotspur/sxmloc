@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-26 10:07+0200\n"
-"PO-Revision-Date: 2010-05-25 22:34+0100\n"
+"POT-Creation-Date: 2011-08-19 12:03+0200\n"
+"PO-Revision-Date: 2011-08-19 12:10+0100\n"
 "Last-Translator: Vojtěch Horký <vojta.horky@seznam.cz>\n"
 "Language-Team: Czech\n"
 "Language: \n"
@@ -64,3 +64,12 @@ msgstr ""
 #, php-format
 msgid "Second chapter"
 msgstr "Druhá kapitola"
+
+#. l10n:POSITION: 1-4-4-1
+#. l10n:POSITION: 1-4-5-1
+#: /dev/stdin:30
+#: /dev/stdin:33
+#, php-format
+msgid "Text to be written twice."
+msgstr "Text který bude napsán dvakrát."
+

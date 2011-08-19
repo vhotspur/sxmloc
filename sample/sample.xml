@@ -32,6 +32,8 @@
 	<title><l:g>Second chapter</l:g></title>
 	<para>Here is a very long text that is supposed to be translated.</para>
 	<para>And yet another paragraph.</para>
+	<para><l:g>Text to be written twice.</l:g></para>
+	<simpara><l:g>Text to be written twice.</l:g></simpara>
 </chapter>
 
 </book>
