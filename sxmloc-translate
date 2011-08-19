@@ -63,4 +63,4 @@ XML_FOOTER
 
 
 ) \
-| xsltproc /dev/stdin "$XML_INPUT"
+| xsltproc --nonet /dev/stdin "$XML_INPUT"
