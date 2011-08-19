@@ -8,7 +8,7 @@ fi
 
 line=`echo "$MSGEXEC_LOCATION" | cut '-d:' -f 2`
 pofile=`echo "$MSGEXEC_LOCATION" | cut '-d:' -f 1`
-position=`sed "${line}q" "$pofile" \
+position_tests=`sed "${line}q" "$pofile" \
 	| tac | sed -n 's/^#. l10n:POSITION:\(.*\)/\1/p' \
 	| tr -d ' ' \
 	| sed "s/.*/(\\$POSITION = '&') or/" \
@@ -16,7 +16,7 @@ position=`sed "${line}q" "$pofile" \
 	| sed 's/ or$//'`
 
 (
-	echo -n '<xsl:when test="'"$position"'">'
+	echo -n '<xsl:when test="'"$position_tests"'">'
 	cat
 	echo '</xsl:when>'
 )
