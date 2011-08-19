@@ -10,10 +10,13 @@ line=`echo "$MSGEXEC_LOCATION" | cut '-d:' -f 2`
 pofile=`echo "$MSGEXEC_LOCATION" | cut '-d:' -f 1`
 position=`sed "${line}q" "$pofile" \
 	| tac | sed -n 's/^#. l10n:POSITION:\(.*\)/\1/p' \
-	| head -n 1 | tr -d ' '`
+	| tr -d ' ' \
+	| sed "s/.*/(\\$POSITION = '&') or/" \
+	| paste -s '-d ' \
+	| sed 's/ or$//'`
 
 (
-	echo -n '<xsl:when test="$POSITION = '"'$position'"'">'
+	echo -n '<xsl:when test="'"$position"'">'
 	cat
 	echo '</xsl:when>'
 )
