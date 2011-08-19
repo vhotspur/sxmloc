@@ -13,7 +13,7 @@ position=`sed "${line}q" "$pofile" \
 	| head -n 1 | tr -d ' '`
 
 (
-	echo '<xsl:when test="$POSITION = '"'$position'"'">'
+	echo -n '<xsl:when test="$POSITION = '"'$position'"'">'
 	cat
 	echo '</xsl:when>'
 )
